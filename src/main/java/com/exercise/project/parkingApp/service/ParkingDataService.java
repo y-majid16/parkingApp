@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Random;
 
@@ -23,7 +24,6 @@ public class ParkingDataService {
     private String generateCode(){
         int length = 8;
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
         StringBuilder randomString = new StringBuilder();
         Random random = new Random();
 
@@ -35,13 +35,13 @@ public class ParkingDataService {
         return randomString.toString();
     }
     public int calculateParking(ParkingData parking) {
-        LocalTime checkIn = parking.getCheckIn();
-        LocalTime checkOut = parking.getCheckOut();
+        LocalDateTime checkIn = parking.getCheckIn();
+        LocalDateTime checkOut = parking.getCheckOut();
         Duration durasi = Duration.between(checkIn,checkOut);
         long minutes = durasi.toMinutes();
         int hours = (int) Math.ceil(minutes / 60.0);
 
-        if(minutes <=5){
+        if(minutes <=5) {
             return 0;
         }
         if (parking.getTypeVihicle().equals("car")) {
@@ -57,11 +57,11 @@ public class ParkingDataService {
         ParkingData parking = new ParkingData();
         String code = generateCode();
         parking.setCode(code);
-        parking.setCheckIn(LocalTime.now());
+        parking.setCheckIn(LocalDateTime.now());
         parking.setTypeVihicle(checkIn.getTypeVihicle());
         parkingRepository.save(parking);
         return CheckInResponses.builder().
-                checkInTime(LocalTime.now()).
+                checkInTime(LocalDateTime.now()).
                 code(code).
                 typeVihicle(checkIn.getTypeVihicle()).
                 build();
@@ -72,8 +72,9 @@ public class ParkingDataService {
         parkingData.setPrice(calculateParking(parkingData));
         parkingRepository.save(parkingData);
         return ParkirResponses.builder().
-                checkIn(parkingData.getCheckIn()).
                 trxId(parkingData.getParkingId()).
+                code(parkingData.getCode()).
+                checkIn(parkingData.getCheckIn()).
                 checkOut(checkOut.getCheckOut()).
                 totalPayment(calculateParking(parkingData)).
                 typeVihicle(parkingData.getTypeVihicle()).

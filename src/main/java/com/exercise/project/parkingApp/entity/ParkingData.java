@@ -1,10 +1,12 @@
 package com.exercise.project.parkingApp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Data
@@ -26,10 +28,12 @@ public class ParkingData {
     private String typeVihicle;
 
     @Column(name = "Jam_masuk")
-    private LocalTime checkIn;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkIn;
 
     @Column(name = "jam_keluar")
-    private LocalTime checkOut;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime checkOut;
 
     private Integer price;
 

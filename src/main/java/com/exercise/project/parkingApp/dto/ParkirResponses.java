@@ -3,6 +3,7 @@ package com.exercise.project.parkingApp.dto;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Builder
@@ -10,8 +11,9 @@ import java.time.LocalTime;
 public class ParkirResponses {
 
     private Integer trxId;
-    private LocalTime checkIn;
-    private LocalTime checkOut;
+    private String code;
+    private LocalDateTime checkIn;
+    private LocalDateTime checkOut;
     private Integer totalPayment;
     private String typeVihicle;
 }

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Builder
@@ -13,5 +14,5 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class CheckOut {
     private String code;
-    private LocalTime checkOut;
+    private LocalDateTime checkOut;
 }
